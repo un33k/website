@@ -1,0 +1,30 @@
+{% load comments i18n %}
+
+<form class="add_comment" action="{% comment_form_target %}" method="post">
+  {% for field in form %}
+	{% if field.is_hidden %}
+	  {{ field }}
+	{% else %}
+		{% ifequal field.name "is_markdown" %}
+			<p class="checkbox help">
+				{{ field }}{{ field.label_tag }}
+			</p>
+		{% else %}
+			<p {% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
+				{{ field.label_tag }}{{ field }}
+				{{ field.errors }}
+			</p>
+		{% endifequal %}
+		{% ifequal field.name "email" %}
+			<p class="help">Required &mdash; but not publicly displayed. Used to generate a <a href="http://www.gravatar.com" class="gravatar">gravatar</a>.</p>
+		{% endifequal %}
+		{% ifequal field.name "url" %}
+			<p class="help">Optional &mdash; your name will be hyperlinked to your site.</p>
+		{% endifequal %}
+	{% endif %}
+  {% endfor %}
+  <p class="submit">
+	<input type="submit" name="post" class="submit-post" value="{% trans "Post" %}" />
+	<input type="submit" name="preview" class="submit-preview" value="{% trans "Preview" %}" />
+  </p>
+</form>

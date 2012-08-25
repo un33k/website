@@ -1,0 +1,535 @@
+=shadow
+	-moz-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25)
+	-webkit-box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.25)
+
+=round
+	-moz-border-radius: 10px
+	-webkit-border-radius: 10px
+	
+=round_less
+	-moz-border-radius: 5px
+	-webkit-border-radius: 5px
+
+=round_top
+	-moz-border-radius-topleft: 10px
+	-moz-border-radius-topright: 10px
+	-webkit-border-top-left-radius: 10px
+	-webkit-border-top-right-radius: 10px
+
+=round_bottom
+	-moz-border-radius-bottomleft: 10px
+	-moz-border-radius-bottomright: 10px
+	-webkit-border-bottom-left-radius: 10px
+	-webkit-border-bottom-right-radius: 10px
+	
+=dashed_border
+	border-bottom: 3px double #cccccc
+
+html
+	overflow-y: scroll
+	height: 100%
+	background: #eee url(/media/img/body_bg.png) repeat left top
+
+body, html, td, textarea, input, select
+	font:
+		family: arial
+		size: 100%
+	color: #222
+	line-height: 1.125em	
+
+body
+	padding: 0 0 10px 0
+	margin: 0
+	vertical-align: top
+
+a
+	&:active, &:hover, &:link
+		color: #095bc0
+
+.clearfix:after
+	content: "."
+	display: block
+	height: 0
+	clear: both
+	visibility: hidden
+
+.clearfix
+	display: inline-block
+
+#wrapper
+	margin: 0 auto
+	width: 980px
+
+#skip
+	position: absolute
+	left: -9999px
+
+#header
+	+shadow
+	+round_bottom
+	float: left
+	width: 100%
+	background-color: #fff
+	border: solid 1px #ccc
+	h1
+		display: block
+		margin: 0
+		padding: 10px 10px
+		a
+			display: block
+			text-indent: -9999px
+			background: #fff url(/media/img/logo.png) no-repeat left top
+			height: 80px
+			width: 411px
+			&.print
+				display: none
+		br
+			display: none
+	.stackoverflow
+		float: right
+		padding: 10px
+
+#menu
+	+shadow
+	+round_bottom
+	float: left
+	clear: both
+	list-style: none
+	margin: 0
+	padding: 0 20px
+	width: 940px
+	height: 40px
+	background: #0552b2 url(/media/img/menu_bg.png) repeat-x 0 0
+	border-top: solid 2px #cccccc
+	li
+		float: left
+		display: block
+		line-height: 40px
+		text-align: center
+		&:hover
+			background: #2672d1 url(/media/img/menu_hover_bg.png) repeat-x 0 0
+			border-bottom: solid 5px #bbbbbb
+		&.active
+			background: #2171d5 url(/media/img/menu_active_bg.png) repeat-x 0 0
+			border-bottom: solid 5px #ffffff
+		a
+			display: block
+			width: 235px
+			height: 40px
+			color: #ffffff
+			text-decoration: none
+			font-weight: bold
+			font-size: 110%
+			text-shadow: 0 0 5px #000000
+
+#content
+	+shadow
+	+round
+	float: left
+	width: 940px
+	clear: both
+	background-color: #ffffff
+	border: solid 1px #cccccc
+	padding: 20px
+	margin: 10px 0
+	font-size: 0.875em
+	h2
+		font-size: 200%
+		margin-top: 0
+		padding-bottom: .5em
+		border-bottom: solid 3px #ccc
+
+#footer
+	clear: both
+	color: #666
+	padding: 0 .25em
+	.validate
+		float: right
+		a
+			padding-left: 20px
+			background: transparent url(/media/img/accept.png) no-repeat left top
+	.site
+		float: right
+		a
+			padding-left: 20px
+			margin-right: 20px
+			background: transparent url(/media/img/brick.png) no-repeat left top
+
+hr
+	border: 0
+	+dashed_border
+	clear: both
+	height: 3px
+	margin-bottom: 1em
+	
+.codehilite
+	pre
+		+round_less
+		padding: .5em
+		margin: 1em 0
+		background-color: #fafafa
+		border: solid 1px #ddd
+		width: auto
+		overflow: auto
+		font-size: 85%
+		font-family: Consolas, Monaco,Lucida Console, Liberation Mono, DejaVu Sans Mono, Bitstream Vera Sans Mono, Courier New
+
+.blog
+	.primary
+		float: left
+		width: 630px
+		.post
+			+round
+			border: solid 1px #ccc
+			margin-bottom: 1em
+			padding: 15px 10px 0 10px
+			h3
+				margin: 0 0 .5em 0
+				font-size: 140%
+				&.title
+					font-size: 200%
+					line-height: 100%
+			img.full
+				margin: 0 -10px
+			img.right
+				margin: 0 0 10px 10px
+				float: right
+			img.left
+				margin: 0 10px 10px 0
+				float: left
+			ul.links
+				list-style: none
+				+round_bottom
+				background: transparent url(/media/img/blog_links.png) repeat-x left bottom
+				margin: 0 -10px
+				padding: 0 10px
+				line-height: 2em
+				border-top: solid 1px #ccc
+				li
+					display: inline
+					padding: 0 5px
+					a.comment
+						padding-left: 20px
+						background: transparent url(/media/img/comment.png) no-repeat left top
+					a.link
+						padding-left: 20px
+						background: transparent url(/media/img/link.png) no-repeat left top
+		.pagination
+			.older
+				padding-left: 20px
+				background: transparent url(/media/img/back.png) no-repeat left center
+			.newer
+				float: right
+				padding-right: 20px
+				background: transparent url(/media/img/next.png) no-repeat right center
+		.archive
+			th
+				font-weight: bold
+				border-bottom: solid 1px #ccc
+				text-align: left
+		.navigation
+			a.next
+				float: right
+				padding-right: 20px
+				background: transparent url(/media/img/next.png) no-repeat right center
+			margin-bottom: 1em
+		.comments
+			margin-top: 2em
+	.secondary
+		+round_less
+		float: left
+		width: 270px
+		margin-left: 15px
+		padding: 1em 10px
+		background-color: #fafafa
+		border: solid 1px #ccc
+		h3
+			margin-top: 0
+		ul
+			padding-left: 20px
+
+.comments
+	#add-comment
+		margin-top: 1em
+	form.add_comment
+		+round
+		margin-top: 1em
+		padding: 0 1em
+		border: solid 1px #ccc
+		background-color: #fafafa
+		label
+			float: left
+			font-weight: bold
+			width: 90px
+			vertical-align: top
+		p
+			input
+				width: 300px
+		p.help
+			padding-left: 90px
+			margin-top: -0.75em
+		p.submit
+			input
+				width: auto
+		p.checkbox
+			label
+				float: none
+				width: auto
+				font-weight: normal
+			input
+				width: auto
+		textarea
+			width: 425px
+			height: 10em
+		ul.errorlist
+			color: red
+		span.loading
+			margin-left: 5px
+			background: transparent url(/media/img/loading.gif) no-repeat left center
+			padding-left: 20px
+		a.gravatar
+			background: transparent url(/media/img/gravatar.png) no-repeat right center
+			padding-right: 20px
+	.comment
+		.body
+			margin-left: 1em
+		.user
+			width: 250px
+			margin-left: 380px
+			&.no-gravatar
+				padding-left: 42px
+			img.gravatar
+				float: left
+				margin-right: 10px
+			.name
+				font-weight: bold
+
+body
+	&.comments
+		form.add_comment
+			width: 610px
+		.preview
+			width: 640px
+			margin-left: 1em
+			margin-bottom: 2em
+
+.resume
+	#content
+		padding-bottom: 0
+	.download
+		float: right
+		font-size: 65%
+		padding-left: 20px
+		background: transparent url(/media/img/acrobat.png) no-repeat left top
+	h3
+		font-size: 125%
+		+dashed_border
+		padding-bottom: .15em
+	ul.position
+		width: 100%
+		float: left
+		list-style: none
+		margin: 0 0 1em 0
+		padding: 0
+		li
+			float: left
+			width: 450px
+			line-height: 1.25em
+			&.title
+				font-weight: bold
+			&.company, &.location
+				float: right
+				text-align: right
+	div.projects
+		margin-left: 1em
+	div.split
+		float: left
+		width: 49%
+		&.pad
+			margin-right: 1em
+	ul.split, ul.split3
+		float: left
+		margin-top: 0
+		list-style: none
+		li
+			float: left
+			width: 405px
+			list-style: none
+			background: url(/media/img/tick.png) no-repeat left center
+			padding-left: 25px
+	ul.split3
+		li
+			width: 275px
+	ul
+		li
+			ul
+				margin-top: .25em
+				margin-bottom: .25em
+
+.portfolio
+	h3
+		font-size: 140%
+	table
+		margin: 0 auto
+		th
+			text-align: left
+			border-bottom: double 3px #ccc
+			padding-left: 0
+		img
+			border: solid 1px #ccc
+			margin: 0 1em
+		tr.even
+			td
+				background-color: #fafafa
+				border-top: solid 1px #ccc
+				border-bottom: solid 1px #ccc
+		td
+			vertical-align: top
+			padding: 1em .5em 1em 0
+			&.thumbnail
+				text-align: center
+				color: #666
+			&.summary
+				width: 450px
+				padding-right: 1em
+				a.title
+					font-size: 120%
+			&.year
+				min-width: 100px
+				font-weight: bold
+				padding-right: 1em
+
+a.back, a.index
+	padding-left: 20px
+	background: transparent url(/media/img/back.png) no-repeat left center
+	
+.portfolio_details
+	h2
+		width: 675px
+	#content
+		padding-bottom: 0
+	hr
+		margin: 2em 0 3em 0
+	.project		
+		h3
+			font-weight: bold
+			font-size: 160%
+		p.url
+			margin-top: -.5em
+		dl
+			+round_less
+			background-color: #fafafa
+			float: right
+			padding: 0 .75em .5em .75em
+			margin: -4em 0 1em 1em
+			width: 225px
+			border: solid 1px #ccc
+			line-height: 2em
+			dt
+				font-weight: bold
+				margin-right: 1.5em
+				float: left
+				width: 50px
+				text-align: right
+				&.title, &.navigation
+					width: auto
+					float: none
+					margin: 0
+					text-align: center
+					border-bottom: solid 1px #ccc
+				&.navigation
+					text-align: left
+					font-weight: normal
+					border-top: solid 1px #ccc
+					border-bottom: 0
+					a.next
+						float: right
+						padding-right: 20px
+						background: transparent url(/media/img/next.png) no-repeat right center
+		p.thumbnails
+			clear: right
+		div.thumbnails
+			+round
+			margin: 0 0 20px 0
+			padding: 18px 20px 0 18px
+			border: solid 1px #ccc
+			background-color: #fafafa
+			width: 900px
+			div.thumbnail
+				float: left
+				width: 440px
+				img
+					border: solid 1px #999
+				p
+					text-align: center
+					margin: .25em 0 1em 0
+			div.pad
+				padding-left: 15px
+			br
+				clear: left
+.portfolio_video
+	.video
+		float: right
+		margin-left: 1em
+		width: 640px
+		height: 480px
+		display: block
+		&.flash-replaced
+			text-align: center
+			.alt
+				display: block
+				height: 0
+				position: absolute
+				overflow: hidden
+				width: 0	
+.about
+	img.picture
+		float: right
+		border: solid 1px #ccc
+		margin: 0 0 1em 1em
+.contact
+	#content
+		background: #fff url(/media/img/contact.jpg) no-repeat right 100px
+	.form
+		+round
+		width: 450px
+		padding: 1em
+		margin-left: 1em
+		border: solid 1px #ccc
+		background-color: #fafafa
+		label
+			float: left
+			font-weight: bold
+			width: 80px
+			vertical-align: top
+		p
+			input
+				width: 200px
+		p.submit
+			input
+				width: auto
+		#id_subject
+			width: 325px
+		textarea
+			width: 325px
+			height: 10em
+		ul.errorlist
+			color: red
+		span.loading
+			margin-left: 5px
+			background: transparent url(/media/img/loading.gif) no-repeat left center
+			padding-left: 20px
+	.message
+		margin-left: 1em
+		.sent, .failed
+			padding-left: 20px
+		.failed
+			color: red
+			background: transparent url(/media/img/exclamation.png) no-repeat left center
+		.sent
+			color: green
+			background: transparent url(/media/img/accept.png) no-repeat left center
+	a.email
+		margin-left: 1em
+		padding-left: 20px
+		background: transparent url(/media/img/email.png) no-repeat left center

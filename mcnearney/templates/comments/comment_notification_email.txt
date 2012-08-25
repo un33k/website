@@ -1,0 +1,14 @@
+A new comment has been posted on your site.
+
+Content Type: {{ comment.content_type }}
+Content Name: {{ comment.content_object }}
+
+------------------------------------------------
+
+Comment ID: {{ comment.id }}
+Comment User Name: {{ comment.user_name }}
+Comment User E-mail: {{ comment.user_email }}
+
+------------------------------------------------
+
+{{ comment.comment }}

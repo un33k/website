@@ -1,0 +1,102 @@
+{% load comments markup gravatar %}
+{% get_comment_count for post as comment_count %}
+
+<div class="post">
+	{% if is_detail %}
+		<h3 class="title">{{ post.title }}</h3>
+	{% else %}
+		<h3><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></h3>
+	{% endif %}
+	
+	<p class="byline">
+		<span class="by">By <a href="/contact/">Lance McNearney</a></span>
+		&nbsp;|&nbsp;
+		<span class="published">{{ post.publish|date:"F j, Y" }}</span>
+	</p>
+		
+	<div class="body">{{ post.body_html|safe }}</div>
+	
+	{% if post.categories.all %}
+		<p class="categories">
+			Categories: 
+			{% for category in post.categories.all %}
+				<a href="{{ category.get_absolute_url }}">{{ category.title }}</a>{% if not forloop.last %}, {% endif %}
+			{% endfor %}
+		</p>
+	{% endif %}
+	
+	{% if not is_detail %}
+		<ul class="links">
+			<li><a href="{{ post.get_absolute_url }}" class="link">Permalink</a></li>
+			<li><a href="{{ post.get_absolute_url }}#comments" class="comment">{{ comment_count }} Comment{{ comment_count|pluralize }}</a></li>
+		</ul>
+	{% endif %}
+</div>
+
+{% if is_detail %}
+
+	{% with post.get_next_post as previous %}
+	{% with post.get_previous_post as next %}
+	{% if next or previous %}
+		<div class="navigation">
+			{% if previous %}
+				<a href="{{ previous.get_absolute_url }}" title="{{ next.title }}" class="next">Next</a>
+			{% endif %}
+			
+			{% if next %}
+				<a href="{{ next.get_absolute_url }}" title="{{ previous.title }}" class="back">Previous</a>
+			{% endif %}
+		</div>
+	{% endif %}
+	{% endwith %}
+	{% endwith %}
+	
+	{% get_comment_list for post as comment_list %}
+		
+	<div id="comments" class="comments">
+		{% if comment_list %}
+			<h2>{{ comment_list|length }} Comment{{ comment_list|pluralize }}</h2>
+			{% for comment in comment_list %}
+			
+				{% gravatar comment.user_email 32 as gravatar %}
+				<div id="c{{ comment.id }}" class="comment">
+					<div class="body">
+						{% if comment.is_markdown %}
+							{{ comment.comment|markdown:"safe,codehilite" }}
+						{% else %}
+							{{ comment.comment|urlizetrunc:"60"|linebreaks }}
+						{% endif %}
+					</div>
+					<div class="user {% if gravatar.is_default %}no-gravatar{% endif %}">
+						{% if not gravatar.is_default %}
+							<img src="{{ gravatar.src }}" width="{{ gravatar.width }}" height="{{ gravatar.height }}" alt="{{ comment.user_name }}" class="gravatar"/>
+						{% endif %}
+						
+						{% if comment.user_url %}
+							<a href="{{ comment.user_url }}" class="name">{{ comment.user_name }}</a>
+						{% else %}
+							<span class="name">{{ comment.user_name }}</span>
+						{% endif %}
+						
+						<div class="date">{{ comment.submit_date|date:"F j, Y" }}</div>
+					</div>
+				</div>
+				
+				{% if not forloop.last %}
+					<hr/>
+				{% endif %}
+				
+			{% endfor %}
+		{% endif %}
+	
+		{% if post.allow_comments %}
+			<h2 id="add-comment">Add Comment</h2>
+			<p>Please fill out the form below to add a comment.</p>
+			<p><em>Comments are moderated and must be approved before they will appear on the site.</em></p>
+			{% with post.get_absolute_url as next %}
+				{% render_comment_form for post %}
+			{% endwith %}
+		{% endif %}
+	</div>
+
+{% endif %}

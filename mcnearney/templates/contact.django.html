@@ -1,0 +1,57 @@
+{% extends "base.django.html" %}
+{% load i18n %}
+
+{% block title %}Contact{% endblock %}
+{% block body %}contact{% endblock %}
+
+{% block head %}
+	<script type="text/javascript" src="{{ MEDIA_URL }}js/jquery.form.js"></script>
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#contact').live('submit', function(e) {
+				$(this).ajaxSubmit({
+					target: '#form',
+					beforeSubmit: function() {
+						$('#contact input[type=submit]')
+						.attr('disabled', 'disabled')
+						.after('<span class="loading">Sending...</span>');
+					},
+					success: function() {
+						$('#contact input[type=submit]')
+							.removeAttr('disabled')
+							.siblings('.loading')
+								.remove();
+								
+						if($('#form .message').length === 0) {
+							$('#contact input:first').focus();
+						}
+					}
+				});
+				
+				e.preventDefault();
+				return false;
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block content %}
+
+	<h2>Contact</h2>
+	
+	<p><strong>How can I contact you?</strong></p>
+	<p>You can e-mail me at my e-mail address below:</p>
+	<p><a href="mailto:lance@mcnearney.net" class="email">lance@mcnearney.net</a></p>
+	
+	<p><strong>Contact Form</strong></p>
+	
+	<p>You can also use this <a href="http://docs.djangoproject.com/en/dev/topics/forms/#form-objects">fancy</a> contact form to send me an e-mail:</p>
+	
+	<div id="form">
+		{% include "contact.form.django.html" %}
+	</div>
+	
+{% endblock %}

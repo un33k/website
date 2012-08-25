@@ -1,0 +1,16 @@
+{% extends "blog/base.django.html" %}
+
+{% block blog_title %}{{ category.title }} &#187; {% endblock %}
+
+{% block blog_content %}
+
+	<h2>{{ category.title }}</h2>
+	
+	{% if object_list %}
+		<p>This category contains the following posts:</p>
+		{% include "blog/post_table.django.html" %}
+	{% else %}
+		<p>No posts have been published for this category.</p>
+	{% endif %}
+
+{% endblock %}

@@ -1,0 +1,124 @@
+{% extends "base.django.html" %}
+{% load i18n thumbnail type %}
+
+{% block title %}{{ project.title }} &#187; Portfolio{% endblock %}
+{% block body %}portfolio_details{% endblock %}
+
+{% block head %}
+	<link type="text/css" rel="stylesheet" href="{{ MEDIA_URL }}prettyphoto/css/prettyPhoto.css"/>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}prettyphoto/js/jquery.prettyPhoto.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("a[rel^='prettyPhoto']").prettyPhoto({
+				allowresize: false,
+				counter_separator_label: ' / ',
+				theme: 'dark_rounded'	
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block content %}
+
+	<h2>{{ project.title }}</h2>
+		
+	<div class="project">
+		
+		<dl>
+			<dt class="title">Project Information</dt>
+			
+			<dt>Type</dt>
+			<dd>{{ project.category }}</dd>
+			
+			<dt>Year</dt>
+			<dd>{{ project.year }}</dd>
+			
+			<dt>Length</dt>
+			<dd>{{ project.start_date|timesince:project.end_date }}</dd>
+			
+			<dt>Team</dt>
+			<dd>{% ifequal project.team_size 1 %}Myself{% else %}{{ project.team_size }}{% endifequal %}</dd>
+			
+			{% with project.get_next_project as next %}
+			{% with project.get_previous_project as previous %}
+			{% if next or previous %}
+				<dt class="navigation">
+					{% if next %}
+						<a href="{{ next.get_absolute_url }}" title="{{ previous.title }}" class="back">Previous</a>
+					{% endif %}
+					
+					{% if previous %}
+						<a href="{{ previous.get_absolute_url }}" title="{{ next.title }}" class="next">Next</a>
+					{% endif %}
+				</dt>
+			{% endif %}
+			{% endwith %}
+			{% endwith %}
+		</dl>
+		
+		{% if project.url %}
+			<p class="url">
+				<a href="{{ project.url }}" title="{{ project.title }}">{{ project.url }}</a>
+			</p>
+		{% endif %}
+		
+		<p>
+			<strong>Summary</strong><br/>
+			{{ project.summary|safe|linebreaksbr }}
+		</p>
+		
+		{% if project.information %}
+			{{ project.information|safe|linebreaks }}
+		{% endif %}
+		
+		<p>
+			<a href="{% url portfolio.views.index %}" class="index">Return to Portfolio Index</a>
+		</p>
+		
+		{% if project.videos_and_thumbnails %}
+		
+			<p class="thumbnails"><strong>
+				{% if project.videos.all %}
+					{{ project.videos.all|length }} Video{{ project.videos.all|pluralize }},&nbsp;
+				{% endif %}
+				
+				{% if project.thumbnails.all %}
+					{{ project.thumbnails.all|length }} Screenshot{{ project.thumbnails.all|pluralize }}
+				{% endif %}
+			</strong></p>
+		
+			<div class="thumbnails">
+				{% for thumbnail in project.videos_and_thumbnails %}
+					<div class="thumbnail {% if forloop.counter|divisibleby:2 %}pad{% endif %}">
+					
+					{% ifequal thumbnail|type "Video" %}
+						{% thumbnail thumbnail.thumbnail 440x330 crop='0,0' as thumb %}
+						<a href="{{ thumbnail.get_absolute_url }}"><img src="{{ thumb }}" width="{{ thumb.width }}" height="{{ thumb.height }}" alt="{{ thumbnail }}" title="{{ thumbnail }}" /></a>
+						<p>
+							<strong><a href="{{ thumbnail.get_absolute_url }}">{{ thumbnail }}</a></strong><br/>
+							{{ thumbnail.summary }}
+						</p>
+					{% else %}
+						{% thumbnail thumbnail.image 440x330 crop='0,0' as thumb %}
+						{% thumbnail thumbnail.image 800x600 as full %}
+						<a href="{{ full }}" rel="prettyPhoto[{{ project.title }}]"><img src="{{ thumb }}" width="{{ thumb.width }}" height="{{ thumb.height }}" alt="{{ thumbnail.title }}" title="{{ thumbnail.title }}" /></a>
+						<p>
+							<strong>{{ thumbnail.title }}</strong><br/>
+							{{ thumbnail.summary }}
+						</p>
+					{% endifequal %}
+					
+					</div>
+					
+					{% if forloop.counter|divisibleby:2 or forloop.last %}
+						<br/>
+					{% endif %}					
+				{% endfor %}
+			</div>
+		{% endif %}
+	</div>
+	
+{% endblock %}

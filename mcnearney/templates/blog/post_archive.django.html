@@ -1,0 +1,48 @@
+{% extends "blog/base.django.html" %}
+
+{% block blog_title %}
+	{% firstof day|date:"F j, Y" month|date:"F Y" year %}
+	
+	{% if day or month or year %}
+		 &#187; Archived Posts &#187; 
+	{% endif %}
+{% endblock %}
+
+{% block blog_content %}
+
+	<h2>
+		{% if day or month or year %}
+			Archived Posts &mdash; 
+		{% endif %}
+		
+		{% firstof day|date:"F j, Y" month|date:"F Y" year "Recent Posts" %}
+	</h2>
+	
+	{% if day or month or year %}
+		{% if object_list %}
+			<p>This archive contains the following posts:</p>
+			{% include "blog/post_table.django.html" %}
+		{% else %}
+			<p>No posts were found in this archived period.</p>
+		{% endif %}
+	{% else %}
+		{% for post in object_list %}
+			{% if forloop.last %}<div class="single">{% endif %}
+			{% include "blog/post.django.html" %}
+			{% if forloop.last %}</div>{% endif %}
+		{% empty %}
+			<p>No posts were found.</p>
+		{% endfor %}
+		
+		{% if is_paginated %}
+			<div class="pagination">
+				{% if has_next %}
+					<a class="older" href="{% url blog_index_paginated page=next %}">Older Posts</a>
+				{% endif %}
+				{% if has_previous %}
+					<a class="newer" href="{% url blog_index_paginated page=previous %}">Newer Posts</a>
+				{% endif %}
+			</div>
+		{% endif %}
+	{% endif %}
+{% endblock %}

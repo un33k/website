@@ -1,0 +1,16 @@
+{% load cache %}
+{% load stack_overflow %}
+{% cache 500 stack_overflow %}
+		
+{% get_stack_overflow_user 25549 as stack_user %}
+{% if stack_user %}
+
+    <div class="stackoverflow">
+    	<a href="{{ stack_user.profileUrl }}" class="name" title="Stack Overflow Profile">{{ stack_user.displayName }}</a><br/>
+    	<span class="reputation">{{ stack_user.reputation }}</span>
+    	{{ stack_user.badgeHtml|safe }}
+    </div>
+
+{% endif %}
+
+{% endcache %}

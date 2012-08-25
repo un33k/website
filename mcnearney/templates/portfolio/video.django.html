@@ -1,0 +1,42 @@
+{% extends "base.django.html" %}
+{% load i18n %}
+{% load thumbnail %}
+
+{% block title %}{{ video }} &#187; {{ project.title }} &#187; Portfolio{% endblock %}
+{% block body %}portfolio_video{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{{ MEDIA_URL }}js/flowplayer-3.1.4.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$('#video').empty();
+			
+			$f('video', '{{ MEDIA_URL }}flash/flowplayer-3.1.5.swf', {
+				clip: { 
+                        url: '{{ MEDIA_URL }}{{ video.video }}', 
+                        autoPlay: 'true'
+                }
+			});
+		});
+	</script>
+{% endblock %}
+
+{% block content %}
+
+	<h2>{{ project.title }}</h2>
+	
+	<a href="{{ MEDIA_URL }}{{ video.video }}" id="video" class="video">Please make sure you have Flash and Javascript enabled to view the video.</a>
+	
+	<div class="summary">
+		
+		<h3>{{ video }}</h3>
+	
+		<p>{{ video.summary }}</p>
+		
+		<p>
+			<a href="{{ project.get_absolute_url }}" class="index">Return to {{ project.title }}</a>
+		</p>
+		
+	</div>
+	
+{% endblock %}

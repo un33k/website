@@ -1,0 +1,27 @@
+{% if failed %}
+	<div class="message">
+		<p class="failed"><strong>Your message could not be sent.</strong></p>
+		<p>An error occurred while attempting to send your message. Please try again or e-mail me directly.</p>
+	</div>
+{% endif %}
+
+{% if sent %}
+	<div class="message">
+		<p class="sent"><strong>Your message has been sent.</strong></p>
+		<p>Thank you for contacting me. I'll get back to you soon!</p>
+	</div>
+{% endif %}
+
+<div class="form">	
+	<form id="contact" action="/contact/" method="post">
+	{% for field in form %}
+		<p>
+			{{ field.label_tag }}{{ field }}
+			{{ field.errors }}
+		</p>
+	{% endfor %}
+	<p class="submit">
+		<input type="submit" value="Send Message" />
+	</p>
+	</form>
+</div>

@@ -1,0 +1,11 @@
+{% extends "blog/base.django.html" %}
+
+{% block blog_title %}{{ object.title }} &#187; {% endblock %}
+
+{% block blog_content %}
+	{% with object as post %}
+		<div class="single">
+			{% include "blog/post.django.html" %}
+		</div>
+	{% endwith %}
+{% endblock %}

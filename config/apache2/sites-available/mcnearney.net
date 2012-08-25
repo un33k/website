@@ -1,0 +1,25 @@
+<VirtualHost 127.0.0.1:80>
+
+    ServerName www.mcnearney.net
+    ServerAlias mcnearney.net
+    ServerAdmin lance@mcnearney.net
+
+    DocumentRoot /srv/www/mcnearney.net/media/
+
+    SetEnvIf remote_addr 99.28.152.23 LOGOFF
+
+    ErrorLog /srv/www/mcnearney.net/logs/error.log
+    CustomLog /srv/www/mcnearney.net/logs/access.log combined env=!LOGOFF
+
+    <Location /admin/>
+    Options None
+    Order deny,allow
+    Allow from 70.187.133.62
+    Deny from all
+    </Location>
+
+    WSGIDaemonProcess mcnearney.net user=www-data group=www-data threads=25 maximum-requests=500 
+    WSGIProcessGroup mcnearney.net
+    WSGIScriptAlias / /srv/www/mcnearney.net/django.wsgi
+
+</VirtualHost>

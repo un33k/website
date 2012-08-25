@@ -1,0 +1,15 @@
+{% extends "blog/base.django.html" %}
+
+{% block blog_title %}Categories &#187; {% endblock %}
+
+{% block blog_content %}
+
+	<h2>Blog Categories</h2>
+	
+	<ul class="categories">
+	{% for category in object_list %}
+		<li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+	{% endfor %}
+	</ul>
+
+{% endblock %}

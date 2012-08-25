@@ -1,0 +1,63 @@
+{% extends "base.django.html" %}
+{% load i18n %}
+{% load thumbnail %}
+
+{% block title %}Portfolio{% endblock %}
+{% block body %}portfolio{% endblock %}
+
+{% block content %}
+
+	<h2>Portfolio</h2>
+	
+	<p>This portfolio contains information and screenshots of different sites and applications I have developed over the last 10 years.</p>
+	
+	{% regroup all_projects by category as categories %}
+	
+	{% for category in categories %}
+		
+		<h3>{{ category.list|length }} {{ category.grouper }}{{ category.list|pluralize }}</h3>
+		
+		<table cellpadding="5" cellspacing="0">
+		<thead>
+		<tr>
+		<th>Thumbnail</th>
+		<th>Project &amp; Summary</th>
+		<th>Year</th>
+		</tr>
+		</thead>
+		
+		<tbody>
+		
+		{% for project in category.list %}
+		
+			<tr class="{% if forloop.counter|divisibleby:2 %}even{% endif %}" valign="top">
+			<td class="thumbnail">
+				{% if project.thumbnails.all %}
+				{% with project.thumbnails.all.0 as thumbnail %}
+					{% thumbnail thumbnail.image 300x225 crop='0,0' as thumb %}
+					<a href="{{ project.get_absolute_url }}">
+						<img src="{{ thumb }}" width="{{ thumb.width }}" height="{{ thumb.height }}" alt="{{ project.title }}" />
+					</a>
+					<br/>
+					{% if project.videos.all %}
+						{{ project.videos.all|length }} video{{ project.videos.all|pluralize }},
+					{% endif %}
+					
+					{{ project.thumbnails.all|length }} screenshot{{ project.thumbnails.all|pluralize }}
+				{% endwith %}
+				{% endif %}
+			</td>
+			<td class="summary">
+				<strong><a href="{{ project.get_absolute_url }}" class="title">{{ project.title }}</a></strong>
+				<p>{{ project.summary|safe|linebreaksbr }}</p>
+			</td>
+			<td class="year">{{ project.year }}</td>
+			</tr>
+		
+		{% endfor %}
+		
+		</tbody>
+		</table>
+		
+	{% endfor %}	
+{% endblock %}

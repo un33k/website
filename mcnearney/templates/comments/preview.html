@@ -1,0 +1,23 @@
+{% extends "comments/base.django.html" %}
+{% load markup %}
+
+{% block comment_title %}Preview &#187; {% endblock %}
+
+{% block content %}
+	<h2>Preview Comment</h2>
+	
+	<div class="preview">
+		{% if not form.errors %}
+			{% ifequal form.data.is_markdown "on" %}
+				{{ comment|markdown:"safe,codehilite" }}
+			{% else %}
+				{{ comment|urlizetrunc:"60"|linebreaks }}
+			{% endifequal %}
+		{% else %}
+			<p>Your comment can not be previewed until you fix the errors in the form below.</p>
+		{% endif %}
+	</div>
+		
+	<h2>Modify Comment</h2>
+	{% include "comments/form.html" %}
+{% endblock %}

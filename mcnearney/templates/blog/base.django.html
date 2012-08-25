@@ -1,0 +1,65 @@
+{% extends "base.django.html" %}
+
+{% block title %}{% block blog_title %}{% endblock %}Blog{% endblock %}
+{% block body %}blog{% endblock %}
+
+{% block content %}
+	<div class="primary">
+		{% block blog_content %}{% endblock %}
+	</div>
+	<div class="secondary">
+		{% load recent_posts archive_months archive_years blog_categories %}
+		{% recent_posts 5 as recent %}
+		
+		{% if recent %}
+			<div class="recent">
+				<h3>Recent Posts</h3>
+				<ul>
+					{% for post in recent %}
+						<li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
+		
+		{% archive_months 12 as months %}
+		
+		{% if months %}
+			<div class="monthly">
+				<h3>Monthly Archives</h3>
+				<ul>
+					{% for month in months %}
+						<li><a href="{% url blog.views.post_archive_month month=month|date:"n",year=month|date:"Y" %}">{{ month|date:"F Y" }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
+		
+		{% archive_years 2 as years %}
+		
+		{% if years %}
+			<div class="yearly">
+				<h3>Yearly Archives</h3>
+				<ul>
+					{% for year in years %}
+						<li><a href="{% url blog.views.post_archive_year year=year|date:"Y" %}">{{ year|date:"Y" }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
+		
+		{% blog_categories as categories %}
+		
+		{% if categories %}
+			<div class="categories">
+				<h3>Categories</h3>
+				<ul>
+					{% for category in categories %}
+						<li><a href="{{ category.get_absolute_url }}">{{ category.title }}</a></li>
+					{% endfor %}
+				</ul>
+			</div>
+		{% endif %}
+		
+	</div>
+{% endblock %}

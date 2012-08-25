@@ -1,0 +1,41 @@
+@media print
+	html, body
+		background-color: #fff
+		
+	a
+		text-decoration: none
+		color: #222 !important
+	
+	#wrapper
+		margin: 0
+		width: 980px
+	
+	#header
+		border: 0
+		-moz-box-shadow: none
+		h1
+			padding: 0
+			margin-bottom: 1em
+			text-align: center
+			a
+				text-indent: 0
+				background: none
+				height: auto
+				width: auto
+				&.print
+					display: block
+					font-size: 60%
+					margin-top: .5em
+		#menu
+			display: none
+		.stackoverflow
+			display: none
+		
+	#content
+		border: 0
+		padding: 0
+		margin: 0
+		-moz-box-shadow: none
+		
+	#footer
+		display: none

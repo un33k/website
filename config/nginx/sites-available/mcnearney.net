@@ -1,0 +1,56 @@
+proxy_cache_path  /var/www/cache levels=1:2 keys_zone=mcnearney.net:8m max_size=1000m inactive=600m;
+proxy_temp_path /var/www/cache/tmp; 
+
+server {
+    listen 74.207.249.172:80;
+    server_name mcnearney.net www.mcnearney.net;
+    access_log off;
+    error_log /srv/www/mcnearney.net/logs/error_nginx.log;
+    error_page 404 = /not_found/;
+    
+    location / {
+        if ($remote_addr != "70.187.133.62") {
+            access_log /srv/www/mcnearney.net/logs/access_nginx.log;
+        }
+        
+        proxy_pass http://127.0.0.1:80;
+        include /etc/nginx/proxy.conf;
+        
+        proxy_cache mcnearney.net;
+        proxy_cache_key $uri$is_args$args; 
+        proxy_cache_valid any 15m;
+        proxy_cache_valid 404 1m;
+        proxy_cache_valid 500 0m;
+    }
+    
+    location ^~ /admin/ {
+        proxy_pass http://127.0.0.1:80;
+        include /etc/nginx/proxy.conf;
+    }
+    
+    location ~ /purge(/.*) {
+        allow 127.0.0.1;
+        allow 74.207.249.172;
+        allow 70.187.133.62;
+        deny all;
+        proxy_cache_purge mcnearney.net $1$is_args$args;
+    }
+
+    location ~ \.flv$ {
+        root /srv/www/mcnearney.net/;
+        flv;
+    }
+    
+    location /media/ {
+        root /srv/www/mcnearney.net/;
+        expires 1d;
+    }
+    
+    location /robots.txt {
+        alias /srv/www/mcnearney.net/media/root/robots.txt;
+    }
+    
+    location /favicon.ico {
+        alias /srv/www/mcnearney.net/media/img/mcnearney.ico;
+    }
+}

@@ -1,0 +1,12 @@
+{% extends "comments/base.django.html" %}
+{% load markup %}
+
+{% block comment_title %}Comment Posted &#187; {% endblock %}
+
+{% block content %}
+	<h2>Comment Posted</h2>
+	<p>Thank you for your comment. It will appear on the site once it has been approved by a moderator.</p>
+	<form action="{{ comment.get_absolute_url }}" method="get">
+		<input type="submit" value="Return to Blog"/>
+	</form>
+{% endblock %}
