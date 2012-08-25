@@ -1,2 +1,1 @@
-mcnearney-website
-=================
+This is just a dump of my website built with Django.
